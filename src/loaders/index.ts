@@ -1,11 +1,11 @@
-import expressLoader from './express';
-import dependencyInjectorLoader from './dependencyInjector';
-import mongooseLoader from './mongoose';
-import jobsLoader from './jobs';
-import Logger from './logger';
-export default async ({ expressApp }) => {
+import expressLoader from "./express";
+import dependencyInjectorLoader from "./dependencyInjector";
+import mongooseLoader from "./mongoose";
+import jobsLoader from "./jobs";
+import Logger from "./logger";
+export default async ({expressApp}) => {
   const mongoConnection = await mongooseLoader();
-  Logger.info('✌️ DB loaded and connected!');
+  Logger.info("✌️ DB loaded and connected!");
 
   /**
    * WTF is going on here?
@@ -16,13 +16,13 @@ export default async ({ expressApp }) => {
    */
 
   const userModel = {
-    name: 'userModel',
+    name: "userModel",
     // Notice the require syntax and the '.default'
-    model: require('../models/user').default,
+    model: require("../models/user").default,
   };
 
   // It returns the agenda instance because it's needed in the subsequent loaders
-  const { agenda } = await dependencyInjectorLoader({
+  const {agenda} = await dependencyInjectorLoader({
     mongoConnection,
     models: [
       userModel,
@@ -30,11 +30,11 @@ export default async ({ expressApp }) => {
       // whateverModel
     ],
   });
-  Logger.info('✌️ Dependency Injector loaded');
+  Logger.info("✌️ Dependency Injector loaded");
 
-  await jobsLoader({ agenda });
-  Logger.info('✌️ Jobs loaded');
+  await jobsLoader({agenda});
+  Logger.info("✌️ Jobs loaded");
 
-  await expressLoader({ app: expressApp });
-  Logger.info('✌️ Express loaded');
+  await expressLoader({app: expressApp});
+  Logger.info("✌️ Express loaded");
 };

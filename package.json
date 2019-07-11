@@ -9,14 +9,80 @@
     "start": "nodemon",
     "inspect": "nodemon --inspect src/app.ts",
     "test": "jest",
-    "lint": "npm run lint:js ",
-    "lint:eslint": "eslint --ignore-path .gitignore --ext .ts",
-    "lint:js": "npm run lint:eslint src/",
-    "lint:fix": "npm run lint:js -- --fix"
+    "lint": "eslint --ext .jsx,.js,.ts ./ --fix"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/santiq/bulletproof-nodejs.git"
+  },
+  "prettier": {
+    "singleQuote": false,
+    "trailingComma": "all",
+    "tabWidth": 2,
+    "printWidth": 120,
+    "semi": true,
+    "bracketSpacing": false,
+    "jsxBracketSameLine": true
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "json"
+    ],
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/?(*.)+(spec|test).ts?(x)"
+    ],
+    "transform": {
+      "^.+\\.ts?$": "ts-jest"
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true,
+      "es6": true,
+      "jest": true
+    },
+    "rules": {
+      "no-console": "error",
+      "no-debugger": "error",
+      "no-unused-vars": "warn",
+      "no-var": "error",
+      "object-curly-spacing": "off",
+      "import/no-default-export": "error",
+      "@typescript-eslint/explicit-member-accessibility": 0,
+      "@typescript-eslint/explicit-function-return-type": 0,
+      "@typescript-eslint/no-parameter-properties": 0,
+      "@typescript-eslint/interface-name-prefix": 0
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:prettier/recommended",
+      "plugin:import/errors",
+      "plugin:import/warnings"
+    ],
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [
+            ".js",
+            ".jsx",
+            ".ts"
+          ]
+        }
+      }
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "legacyDecorators": true
+      }
+    }
   },
   "keywords": [
     "boilerplay",
@@ -63,6 +129,7 @@
     "@typescript-eslint/parser": "^1.7.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-prettier": "^3.0.1",
     "jest": "^24.1.0",
     "prettier": "^1.17.0",

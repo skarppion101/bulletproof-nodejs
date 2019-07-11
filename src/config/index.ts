@@ -1,7 +1,7 @@
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
 
 // Set the NODE_ENV to 'development' by default
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
 const envFound = dotenv.config();
 if (!envFound) {
@@ -30,7 +30,7 @@ export default {
    * Used by winston logger
    */
   logs: {
-    level: process.env.LOG_LEVEL || 'silly',
+    level: process.env.LOG_LEVEL || "silly",
   },
 
   /**
@@ -46,6 +46,6 @@ export default {
    * API configs
    */
   api: {
-    prefix: '/api',
+    prefix: "/api",
   },
 };

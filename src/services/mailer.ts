@@ -1,5 +1,5 @@
-import { Service } from 'typedi';
-import { IUser } from '../interfaces/IUser';
+import {Service} from "typedi";
+import {IUser} from "../interfaces/IUser";
 
 @Service()
 export default class MailerService {
@@ -7,11 +7,11 @@ export default class MailerService {
     /**
      * @TODO Call Mailchimp/Sendgrid or whatever
      */
-    return { delivered: 1, status: 'ok' };
+    return {delivered: 1, status: "ok"};
   }
   public StartEmailSequence(sequence: string, user: Partial<IUser>) {
     if (!user.email) {
-      throw new Error('No email provided');
+      throw new Error("No email provided");
     }
     // @TODO Add example of an email sequence implementation
     // Something like
@@ -20,6 +20,6 @@ export default class MailerService {
     // 3 - Schedule job for second email in 1-3 days or whatever
     // Every sequence can have its own behavior so maybe
     // the pattern Chain of Responsibility can help here.
-    return { delivered: 1, status: 'ok' };
+    return {delivered: 1, status: "ok"};
   }
 }
