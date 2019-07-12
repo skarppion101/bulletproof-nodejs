@@ -9,23 +9,24 @@
       "./node_modules/@types",
       "./src/types"
     ],
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "alwaysStrict": true,
+    "noImplicitReturns": true,
+    "strict": true,
+    "baseUrl": ".",
     "moduleResolution": "node",
     "module": "commonjs",
     "pretty": true,
     "sourceMap": true,
-    "outDir": "./build",
-    "allowJs": true,
-    "noEmit": false
+    "outDir": "./dist"
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "./tests/**/*"
   ],
   "exclude": [
-    "node_modules",
-    "tests"
+    "node_modules"
   ]
 }

@@ -1,10 +1,11 @@
 import expressLoader from "./express";
-import dependencyInjectorLoader from "./dependencyInjector";
 import mongooseLoader from "./mongoose";
 import jobsLoader from "./jobs";
 import Logger from "./logger";
-export default async ({expressApp}) => {
-  const mongoConnection = await mongooseLoader();
+import {Application} from "express";
+
+export function addLoaders(app: Application) {
+  const mongoConnection = mongooseLoader();
   Logger.info("✌️ DB loaded and connected!");
 
   /**
@@ -22,7 +23,7 @@ export default async ({expressApp}) => {
   };
 
   // It returns the agenda instance because it's needed in the subsequent loaders
-  const {agenda} = await dependencyInjectorLoader({
+  const {agenda} = dependencyInjectorLoader({
     mongoConnection,
     models: [
       userModel,
@@ -32,9 +33,9 @@ export default async ({expressApp}) => {
   });
   Logger.info("✌️ Dependency Injector loaded");
 
-  await jobsLoader({agenda});
+  jobsLoader({agenda});
   Logger.info("✌️ Jobs loaded");
 
-  await expressLoader({app: expressApp});
+  expressLoader({app});
   Logger.info("✌️ Express loaded");
-};
+}

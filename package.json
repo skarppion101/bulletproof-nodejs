@@ -49,10 +49,11 @@
     "rules": {
       "no-console": "error",
       "no-debugger": "error",
-      "no-unused-vars": "warn",
+      "no-unused-vars": "off",
       "no-var": "error",
       "object-curly-spacing": "off",
       "import/no-default-export": "error",
+      "@typescript-eslint/no-unused-vars": "warn",
       "@typescript-eslint/explicit-member-accessibility": 0,
       "@typescript-eslint/explicit-function-return-type": 0,
       "@typescript-eslint/no-parameter-properties": 0,
@@ -75,6 +76,7 @@
         }
       }
     },
+    "plugins": ["@typescript-eslint"],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
       "ecmaVersion": 6,
@@ -115,11 +117,11 @@
     "moment-timezone": "^0.5.23",
     "mongoose": "^5.4.13",
     "morgan": "^1.9.1",
-    "reflect-metadata": "^0.1.12",
     "typedi": "^0.8.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@types/dotenv": "^6.1.1",
     "@types/express": "^4.16.0",
     "@types/jest": "^23.3.8",
     "@types/lodash": "^4.14.118",
