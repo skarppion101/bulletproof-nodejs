@@ -1,13 +1,14 @@
-import config from "./config";
+import {loadEnvVariables} from "./config/config";
 import express from "express";
 import Logger from "./loaders/logger";
-import {addLoaders} from "./loaders";
+import {addLoaders} from "./loaders/loaders";
 
 const app = express();
+const env = loadEnvVariables();
 
 addLoaders(app);
 
-app.listen(config.port, (err: Error) => {
+app.listen(env.PORT, (err: Error) => {
   if (err) {
     Logger.error(err);
     process.exit(1);
@@ -15,7 +16,7 @@ app.listen(config.port, (err: Error) => {
   }
   Logger.info(`
     ################################################
-    🛡️  Server listening on port: ${config.port} 🛡️ 
+    🛡️  Server listening on port: ${env.PORT} 🛡️ 
     ################################################
   `);
 });

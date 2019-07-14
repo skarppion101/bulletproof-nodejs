@@ -1,5 +1,5 @@
 import * as Agenda from "agenda";
-import config from "../config";
+import config from "../config/config";
 
 export default ({mongoConnection}) => {
   return new Agenda({

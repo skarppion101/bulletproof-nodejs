@@ -1,7 +1,7 @@
 import {Service, Inject} from "typedi";
 import * as jwt from "jsonwebtoken";
 import MailerService from "./mailer";
-import config from "../config";
+import config from "../config/config";
 import * as argon2 from "argon2";
 import {randomBytes} from "crypto";
 import {IUser, IUserInputDTO} from "../interfaces/IUser";
