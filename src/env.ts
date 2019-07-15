@@ -1,10 +1,16 @@
 import {config} from "dotenv";
 import path from "path";
-import {ENV_VARIABLES} from "../enum/environments";
+import {ENV_VARIABLES} from "./enum/environments";
 
 process.env.NODE_ENV = process.env.NODE_ENV || ENV_VARIABLES.DEVELOPMENT;
 
-export class Env {
+export interface IEnv {
+  PORT: number;
+  IS_PRODUCTION: boolean;
+  JWT_SECRET: string;
+}
+
+export class Env implements IEnv {
   PORT: number;
   IS_PRODUCTION: boolean;
   JWT_SECRET: string;
@@ -22,7 +28,7 @@ export class Env {
   }
 }
 
-export function loadEnvVariables(): Env {
+export function loadEnvVariables(): IEnv {
   if (process.env.NODE_ENV === ENV_VARIABLES.DEVELOPMENT) {
     const envFound = config({path: path.join(__dirname, "../../../.env")});
     if (envFound.error) throw envFound.error;

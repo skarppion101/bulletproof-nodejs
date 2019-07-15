@@ -1,4 +1,4 @@
-import config from "../config/config";
+import config from "../env";
 import EmailSequenceJob from "../jobs/emailSequence";
 
 export default ({agenda}) => {

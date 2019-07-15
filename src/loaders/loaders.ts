@@ -1,16 +1,15 @@
 import {expressLoaders} from "./express/express";
-import Logger from "./logger";
 import {Application} from "express";
-import {api} from "../api/api";
-import {healthCheckStatus} from "../api/healthCheck";
+import {apiV1} from "../api/v1";
+import {healthCheck} from "../api/health-check";
 
 export function addLoaders(app: Application) {
   // Load express plugins
   expressLoaders(app);
-  healthCheckStatus(app);
+  healthCheck(app);
 
   // Load API routes
-  app.use("/api", api);
+  app.use("/api", apiV1);
 
-  Logger.info("✌️ Express loaded");
+  app.ctx.logger.info("✌️ Express loaded");
 }

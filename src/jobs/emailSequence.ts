@@ -1,5 +1,5 @@
 import {Container} from "typedi";
-import MailerService from "../services/mailer";
+import MailerService from "../services/mail/mailer";
 
 export default class EmailSequenceJob {
   public async handler(job, done): Promise<void> {
