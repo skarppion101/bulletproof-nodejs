@@ -11,26 +11,16 @@ Maybe we can transform this into something useful, a more advanced example, just
 
 ## Development
 
-We use `node` version `10.15.0`
-
-```
-nvm install 10.15.0
-```
-
-```
-nvm use 10.15.0
-```
-
 The first time, you will need to run
 
 ```
-npm install
+yarn
 ```
 
 Then just start the server with 
 
 ```
-npm run start
+yarn run nodemon
 ```
 It uses nodemon for livereloading :peace-fingers:
 
