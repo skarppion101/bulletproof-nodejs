@@ -1,19 +1,27 @@
-import {celebrate, Joi} from "celebrate";
-import {NextFunction, Request, Response} from "express";
+import Joi from "@hapi/joi";
 import {IUserInputDTO} from "../../../../interfaces/IUser";
 
-const scheme = {
-  body: Joi.object({
-    name: Joi.string().required(),
-    email: Joi.string().required(),
-    password: Joi.string().required(),
-  }),
-};
+export const validationScheme = Joi.object().keys({
+  name: Joi.string().required(),
+  email: Joi.string().required(),
+  password: Joi.string().required(),
+});
 
-export const signUpValidator = celebrate(scheme);
+export interface ISignUpResponse {
+  success: boolean;
+  id?: string;
+  token?: string;
+}
 
-export function signUpCtr(data: IUserInputDTO) {
-  return new Promise(resolve => {
-    resolve({});
-  });
+function getUserMock() {
+  return {
+    success: true,
+    token: "sdas",
+  };
+}
+
+export function signUpCtr(user: IUserInputDTO) {
+  return validationScheme
+    .validate(user)
+    .then(getUserMock);
 }

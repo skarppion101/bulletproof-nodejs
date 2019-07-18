@@ -1,5 +1,6 @@
-import {AUTH_SIGN_UP} from "./routes/auth";
+import {AUTH_SIGN_IN, AUTH_SIGN_UP} from "./routes/auth";
 import {IUserInputDTO} from "../../interfaces/IUser";
+import {ISignUpResponse} from "./routes/auth/signup";
 
 export interface APIDoc {
   [AUTH_SIGN_UP]: {
@@ -7,8 +8,18 @@ export interface APIDoc {
       params: {};
       query: {};
       body: IUserInputDTO;
+      response: ISignUpResponse;
+    };
+  };
+
+  [AUTH_SIGN_IN]: {
+    POST: {
+      params: {};
+      query: {};
+      body: IUserInputDTO;
       response: {
         success: boolean;
+        smth: string;
         id?: string;
       };
     };

@@ -1,24 +1,17 @@
-import {Router, Request, Response, NextFunction} from "express";
+import {Router} from "express";
 // import AuthService from "../../../../services/auth";
-import {IUserInputDTO} from "../../../../interfaces/IUser";
 // import middlewares from "../../middlewares";
-import {signUpCtr, signUpValidator} from "./signup";
-import {signInCtr, signInValidator} from "./signin";
-import RestypedRouter, {TypedRequest} from "restyped-express-async";
+import {signUpCtr} from "./signup";
+// import {signInCtr} from "./signin";
+import RestypedRouter from "restyped-express-async";
 import {APIDoc} from "../../doc";
 
 export const AUTH_SIGN_UP = "/auth/sign-up";
+export const AUTH_SIGN_IN = "/auth/sign-in";
 
-// export const auth = Router();
-const router = Router();
+export const auth = RestypedRouter<APIDoc>(Router());
 
-const auth = RestypedRouter<APIDoc>(router);
-
-auth.post(AUTH_SIGN_UP, req => {
-  return signUpCtr(req.body);
-
-  // return new Promise(res => res({success: true}));
-});
+auth.post(AUTH_SIGN_UP, req => signUpCtr(req.body));
 
 // auth.post("/sign-in", signInValidator, signInCtr);
 // auth.post("/sign-up", signUpValidator, signUpCtr);
