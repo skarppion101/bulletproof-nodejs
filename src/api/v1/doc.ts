@@ -1,8 +1,22 @@
 import {AUTH_SIGN_IN, AUTH_SIGN_UP} from "./routes/auth";
 import {IUserInputDTO} from "../../interfaces/IUser";
 import {ISignUpResponse} from "./routes/auth/signup";
+import {STATUS} from "../routes";
 
 export interface APIDoc {
+  [STATUS]: {
+    GET: {
+      response: {
+        ok: boolean;
+      };
+    };
+    HEAD: {
+      response: {
+        ok: boolean;
+      };
+    };
+  };
+
   [AUTH_SIGN_UP]: {
     POST: {
       params: {};

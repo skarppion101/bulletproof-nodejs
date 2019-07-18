@@ -30,7 +30,7 @@ export class Env implements IEnv {
 
 export function loadEnvVariables(): IEnv {
   if (process.env.NODE_ENV === ENV_VARIABLES.DEVELOPMENT) {
-    const envFound = config({path: path.join(__dirname, "../../../.env")});
+    const envFound = config({path: path.join(__dirname, "../../.env")});
     if (envFound.error) throw envFound.error;
   }
   return new Env(process.env);
