@@ -1,6 +1,6 @@
 import {loadEnvVariables} from "./env";
 import express from "express";
-import {createLogger} from "./services/logger";
+import {createLogger} from "./utils/logger";
 import {addLoaders} from "./loaders/loaders";
 
 const app = express();

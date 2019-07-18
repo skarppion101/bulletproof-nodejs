@@ -12,7 +12,7 @@ declare global {
     export interface Application {
       ctx: Context;
     }
-    export interface Request {
+    export interface Request extends Request {
       currentUser: IUser;
     }
   }

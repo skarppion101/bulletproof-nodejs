@@ -1,5 +1,6 @@
 import {celebrate, Joi} from "celebrate";
 import {NextFunction, Request, Response} from "express";
+import {IUserInputDTO} from "../../../../interfaces/IUser";
 
 const scheme = {
   body: Joi.object({
@@ -11,28 +12,8 @@ const scheme = {
 
 export const signUpValidator = celebrate(scheme);
 
-// auth.post("/signup", celebrate(scheme), function(req, res, next) {
-//   const {logger} = req.app.ctx;
-//   logger.debug("Calling Sign-Up endpoint with body: %o", req.body);
-//   res.status(201).json({ok: true});
-//   // try {
-//   //   const {user, token} = authService.SignUp(req.body as IUserInputDTO);
-//   //   return res.status(201).json({user, token});
-//   // } catch (e) {
-//   //   logger.error("🔥 error: %o", e);
-//   //   return next(e);
-//   // }
-// });
-
-export function signUpCtr(req: Request, res: Response, next: NextFunction) {
-  const {logger} = req.app.ctx;
-  logger.debug("Calling Sign-Up endpoint with body: %o", req.body);
-  res.status(201).json({ok: true});
-  // try {
-  //   const {user, token} = authService.SignUp(req.body as IUserInputDTO);
-  //   return res.status(201).json({user, token});
-  // } catch (e) {
-  //   logger.error("🔥 error: %o", e);
-  //   return next(e);
-  // }
+export function signUpCtr(data: IUserInputDTO) {
+  return new Promise(resolve => {
+    resolve({});
+  });
 }

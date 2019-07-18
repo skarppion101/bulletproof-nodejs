@@ -1,14 +1,27 @@
 import {Router, Request, Response, NextFunction} from "express";
-import {Container} from "typedi";
 // import AuthService from "../../../../services/auth";
 import {IUserInputDTO} from "../../../../interfaces/IUser";
 // import middlewares from "../../middlewares";
-import {celebrate, Joi} from "celebrate";
 import {signUpCtr, signUpValidator} from "./signup";
+import {signInCtr, signInValidator} from "./signin";
+import RestypedRouter, {TypedRequest} from "restyped-express-async";
+import {APIDoc} from "../../doc";
 
-export const auth = Router();
+export const AUTH_SIGN_UP = "/auth/sign-up";
 
-auth.post("/signup", signUpValidator, signUpCtr);
+// export const auth = Router();
+const router = Router();
+
+const auth = RestypedRouter<APIDoc>(router);
+
+auth.post(AUTH_SIGN_UP, req => {
+  return signUpCtr(req.body);
+
+  // return new Promise(res => res({success: true}));
+});
+
+// auth.post("/sign-in", signInValidator, signInCtr);
+// auth.post("/sign-up", signUpValidator, signUpCtr);
 
 // auth.post(
 //   "/signup",
