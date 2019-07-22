@@ -1,8 +1,10 @@
-import {Router} from "express";
-import {auth} from "./routes/auth";
-import RestypedRouter from "restyped-express-async";
-import {APIDoc} from "./doc";
+import {Application, Router} from "express";
+import {authRouter} from "./routes/auth";
 
-export const apiV1 = RestypedRouter<APIDoc>(Router());
+export function loadAPIV1(app: Application) {
+  const apiV1 = Router();
 
-apiV1.use(auth);
+  authRouter(apiV1);
+
+  app.use("/api/v1", apiV1);
+}

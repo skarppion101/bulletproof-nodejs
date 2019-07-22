@@ -1,16 +1,11 @@
-import {AUTH_SIGN_IN, AUTH_SIGN_UP} from "./routes/auth";
-import {IUserInputDTO} from "../../interfaces/IUser";
-import {ISignUpResponse} from "./routes/auth/signup";
-import {STATUS} from "../routes";
+import {AUTH_SIGN_IN, AUTH_SIGN_UP} from "../api/v1/routes/auth";
+import {IUserInputDTO} from "../interfaces/IUser";
+import {ISignUpResponse} from "../api/v1/routes/auth/signup";
+import {INFO} from "../api/v1/routes/info";
 
-export interface APIDoc {
-  [STATUS]: {
+export interface APIV1Doc {
+  [INFO]: {
     GET: {
-      response: {
-        ok: boolean;
-      };
-    };
-    HEAD: {
       response: {
         ok: boolean;
       };
@@ -19,8 +14,6 @@ export interface APIDoc {
 
   [AUTH_SIGN_UP]: {
     POST: {
-      params: {};
-      query: {};
       body: IUserInputDTO;
       response: ISignUpResponse;
     };
@@ -28,8 +21,6 @@ export interface APIDoc {
 
   [AUTH_SIGN_IN]: {
     POST: {
-      params: {};
-      query: {};
       body: IUserInputDTO;
       response: {
         success: boolean;

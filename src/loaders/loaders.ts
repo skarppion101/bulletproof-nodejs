@@ -1,17 +1,20 @@
 import {expressLoaders} from "./express/express";
 import {Application} from "express";
-import {apiV1} from "../api/v1";
-import {status, r} from "../api/routes";
+import {loadAPIV1} from "../api/v1";
+import {loadCommonAPI} from "../api";
+import {globalErrorHandler, notFoundErrorHandler} from "./express/error-handler";
 
 export function addLoaders(app: Application) {
   // Load express plugins
   expressLoaders(app);
-  // healthCheck(app);
 
   // Load API routes
-  app.use("/as", r);
-  // f(app);
-  // app.use("/api", apiV1);
+  loadCommonAPI(app);
+  loadAPIV1(app);
+
+  // Load error handlers
+  app.use(notFoundErrorHandler);
+  app.use(globalErrorHandler);
 
   app.ctx.logger.info("✌️ Express loaded");
 }

@@ -1,20 +1,16 @@
 import {Router} from "express";
 // import AuthService from "../../../../services/auth";
 // import middlewares from "../../middlewares";
-import {signUpCtr} from "./signup";
 // import {signInCtr} from "./signin";
 import RestypedRouter from "restyped-express-async";
 import {APIV1Doc} from "../../../../types/api-v1-doc";
+import {infoCtr} from "./info";
 
-export const AUTH_SIGN_UP = "/auth/sign-up";
-export const AUTH_SIGN_IN = "/auth/sign-in";
+export const INFO = "/info";
 
-export function authRouter(parentRouter: Router) {
-  const router = RestypedRouter<APIV1Doc>(parentRouter);
+export const info = RestypedRouter<APIV1Doc>(Router());
 
-  router.post(AUTH_SIGN_UP, async req => signUpCtr(req.body));
-  router.post(AUTH_SIGN_UP, async req => signUpCtr(req.body));
-}
+info.get(INFO, () => infoCtr());
 
 // auth.post("/sign-in", signInValidator, signInCtr);
 // auth.post("/sign-up", signUpValidator, signUpCtr);
