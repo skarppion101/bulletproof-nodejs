@@ -1,4 +1,4 @@
-import {IUser} from "../interfaces/IUser";
+import {IUserRecord} from "../interfaces/IUser";
 import * as mongoose from "mongoose";
 
 const User = new mongoose.Schema(
@@ -28,4 +28,4 @@ const User = new mongoose.Schema(
   {timestamps: true},
 );
 
-export default mongoose.model<IUser & mongoose.Document>("User", User);
+export default mongoose.model<IUserRecord & mongoose.Document>("User", User);

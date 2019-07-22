@@ -1,9 +1,7 @@
 import {Router} from "express";
-// import AuthService from "../../../../services/auth";
-// import middlewares from "../../middlewares";
 import {signUpCtr} from "./signup";
-// import {signInCtr} from "./signin";
-import RestypedRouter from "restyped-express-async";
+import {signInCtr} from "./signin";
+import RestypedRouter from "restyped-express-async-middleware";
 import {APIV1Doc} from "../../../../types/api-v1-doc";
 
 export const AUTH_SIGN_UP = "/auth/sign-up";
@@ -13,7 +11,7 @@ export function authRouter(parentRouter: Router) {
   const router = RestypedRouter<APIV1Doc>(parentRouter);
 
   router.post(AUTH_SIGN_UP, async req => signUpCtr(req.body));
-  router.post(AUTH_SIGN_UP, async req => signUpCtr(req.body));
+  router.post(AUTH_SIGN_IN, async req => signInCtr(req.body));
 }
 
 // auth.post("/sign-in", signInValidator, signInCtr);

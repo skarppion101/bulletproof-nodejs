@@ -4,7 +4,7 @@ import {Env} from "../env";
 export function createLogger(env: Env): Logger {
   const transports = [];
 
-  if (env.IS_PRODUCTION) {
+  if (!env.IS_PRODUCTION) {
     transports.push(new winston.transports.Console());
   } else {
     transports.push(
@@ -15,7 +15,7 @@ export function createLogger(env: Env): Logger {
   }
 
   return winston.createLogger({
-    level: "all",
+    level: env.IS_PRODUCTION ? "info" : "debug",
     levels: winston.config.npm.levels,
     format: winston.format.combine(
       winston.format.timestamp({

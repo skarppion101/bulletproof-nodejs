@@ -1,32 +1,36 @@
 import {AUTH_SIGN_IN, AUTH_SIGN_UP} from "../api/v1/routes/auth";
-import {IUserInputDTO} from "../interfaces/IUser";
+import {ISignInUserInput, ISignUpUserInput, IUserRecord, IUserWithToken} from "../interfaces/IUser";
 import {ISignUpResponse} from "../api/v1/routes/auth/signup";
 import {INFO} from "../api/v1/routes/info";
+import {ICommonResponse} from "./api-doc";
+import {ISignInResponse} from "../api/v1/routes/auth/signin";
+import {USERS_ME} from "../api/v1/routes/users";
 
 export interface APIV1Doc {
   [INFO]: {
     GET: {
-      response: {
-        ok: boolean;
-      };
+      response: ICommonResponse;
     };
   };
 
   [AUTH_SIGN_UP]: {
     POST: {
-      body: IUserInputDTO;
+      body: ISignUpUserInput;
       response: ISignUpResponse;
     };
   };
 
   [AUTH_SIGN_IN]: {
     POST: {
-      body: IUserInputDTO;
-      response: {
-        success: boolean;
-        smth: string;
-        id?: string;
-      };
+      body: ISignInUserInput;
+      response: ISignInResponse;
+    };
+  };
+
+  [USERS_ME]: {
+    GET: {
+      head: IUserWithToken;
+      response: IUserRecord;
     };
   };
 

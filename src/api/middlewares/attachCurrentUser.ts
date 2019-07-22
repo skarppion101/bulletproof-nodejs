@@ -1,5 +1,5 @@
 import {Container} from "typedi";
-import {IUser} from "../../../interfaces/IUser";
+import {IUserRecord} from "../../interfaces/IUser";
 
 /**
  * Attach user to req.user

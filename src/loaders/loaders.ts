@@ -4,7 +4,7 @@ import {loadAPIV1} from "../api/v1";
 import {loadCommonAPI} from "../api";
 import {globalErrorHandler, notFoundErrorHandler} from "./express/error-handler";
 
-export function addLoaders(app: Application) {
+export function initLoaders(app: Application) {
   // Load express plugins
   expressLoaders(app);
 

@@ -1,5 +1,6 @@
 import Joi from "@hapi/joi";
-import {IUserInputDTO} from "../../../../interfaces/IUser";
+import {ISignUpUserInput} from "../../../../interfaces/IUser";
+import {ICommonResponse} from "../../../../types/api-doc";
 
 export const validationScheme = Joi.object().keys({
   name: Joi.string().required(),
@@ -7,21 +8,13 @@ export const validationScheme = Joi.object().keys({
   password: Joi.string().required(),
 });
 
-export interface ISignUpResponse {
-  success: boolean;
-  id?: string;
+export interface ISignUpResponse extends ICommonResponse {
   token?: string;
 }
 
-function getUserMock() {
-  return {
-    success: true,
-    token: "sdas",
-  };
-}
+export function signUpCtr(user: ISignUpUserInput): ISignUpResponse {
+  const result = validationScheme.validate(user);
+  if (result.error) throw result.error;
 
-export function signUpCtr(user: IUserInputDTO) {
-  return validationScheme
-    .validate(user)
-    .then(getUserMock);
+  return {ok: true};
 }

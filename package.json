@@ -120,7 +120,7 @@
     "moment-timezone": "^0.5.23",
     "morgan": "^1.9.1",
     "restyped": "^1.1.0",
-    "restyped-express-async": "^0.6.1",
+    "restyped-express-async-middleware": "^0.6.0",
     "typedi": "^0.8.0",
     "winston": "^3.2.1"
   },

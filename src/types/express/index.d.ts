@@ -1,10 +1,12 @@
-import {IUser} from "../../interfaces/IUser";
+import {IUserRecord} from "../../interfaces/IUser";
 import {IEnv} from "../../env";
 import {Logger} from "winston";
+import {IServices} from "../../services";
 
 interface Context {
   env: IEnv;
   logger: Logger;
+  services: IServices;
 }
 
 declare global {
@@ -13,7 +15,7 @@ declare global {
       ctx: Context;
     }
     export interface Request extends Request {
-      currentUser: IUser;
+      currentUser: IUserRecord;
     }
   }
 }

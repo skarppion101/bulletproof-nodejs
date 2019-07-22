@@ -1,17 +1,21 @@
 import {loadEnvVariables} from "./env";
 import express from "express";
 import {createLogger} from "./utils/logger";
-import {addLoaders} from "./loaders/loaders";
+import {initLoaders} from "./loaders/loaders";
+import {initMiddlewares} from "./api/middlewares";
+import {initServices} from "./services";
 
 const app = express();
 const env = loadEnvVariables();
 const logger = createLogger(env);
 
 app.ctx = {
-  env: env,
-  logger: logger,
+  env,
+  logger,
+  services: initServices(app, env),
 };
-addLoaders(app);
+initMiddlewares(env);
+initLoaders(app);
 
 app.listen(env.PORT, (err: Error) => {
   if (err) {

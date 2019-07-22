@@ -1,17 +1,18 @@
 import {STATUS} from "../api/routes/status";
 
-export interface IServerStatus {
+export interface ICommonResponse {
   ok: boolean;
-  serverTime: number;
+  serverTime?: number;
+  description?: string;
 }
 
 export interface APIDoc {
   [STATUS]: {
     GET: {
-      response: IServerStatus;
+      response: ICommonResponse;
     };
     HEAD: {
-      response: IServerStatus;
+      response: ICommonResponse;
     };
   };
 }
