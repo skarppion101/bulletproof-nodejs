@@ -1,6 +1,17 @@
 import {IUserRecord} from "../interfaces/IUser";
+import {IMailer} from "../interfaces/IMailer";
+import {Application} from "express";
+import {IEnv} from "../env";
 
-export class Mailer {
+export class Mailer implements IMailer {
+  private app: Application;
+  private env: IEnv;
+
+  constructor(app: Application, env: IEnv) {
+    this.app = app;
+    this.env = env;
+  }
+
   sendWelcomeEmail(user: Partial<IUserRecord>) {
     /**
      * @TODO Call Mailchimp/Sendgrid or whatever
