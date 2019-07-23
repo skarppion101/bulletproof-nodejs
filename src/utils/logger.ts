@@ -1,7 +1,7 @@
 import winston, {Logger} from "winston";
-import {Env} from "../env";
+import {IEnv} from "../env";
 
-export function createLogger(env: Env): Logger {
+export function createLogger(env: IEnv): Logger {
   const transports = [];
 
   if (!env.IS_PRODUCTION) {

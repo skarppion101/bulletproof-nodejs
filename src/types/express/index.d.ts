@@ -1,4 +1,3 @@
-import {IUserRecord} from "../../interfaces/IUser";
 import {IEnv} from "../../env";
 import {Logger} from "winston";
 import {IServices} from "../../services";
@@ -14,8 +13,8 @@ declare global {
     export interface Application {
       ctx: Context;
     }
-    export interface Request extends Request {
-      currentUser: IUserRecord;
+    export interface Request {
+      token: string;
     }
   }
 }

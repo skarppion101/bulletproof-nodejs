@@ -1,14 +1,14 @@
 import {Application} from "express";
-import {AuthService} from "./auth";
+import {Auth} from "./auth";
 import {IAuth} from "../interfaces/IAuth";
-import {Env} from "../env";
+import {IEnv} from "../env";
 
 export interface IServices {
   auth: IAuth;
 }
 
-export function initServices(app: Application, env: Env): IServices {
+export function initServices(app: Application, env: IEnv): IServices {
   return {
-    auth: new AuthService(app, env),
+    auth: new Auth(app, env),
   };
 }

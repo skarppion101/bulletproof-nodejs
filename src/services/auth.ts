@@ -1,10 +1,9 @@
 import jwt from "jsonwebtoken";
-import config from "../config/config";
 import argon2 from "argon2";
 import {IUserRecord} from "../interfaces/IUser";
 import {Application} from "express";
 import {IAuth} from "../interfaces/IAuth";
-import {Env} from "../env";
+import {IEnv} from "../env";
 //
 // @Service()
 // export default class AuthService {
@@ -121,11 +120,11 @@ import {Env} from "../env";
 //   }
 // }
 
-export class AuthService implements IAuth {
+export class Auth implements IAuth {
   private app: Application;
-  private env: Env;
+  private env: IEnv;
 
-  constructor(app: Application, env: Env) {
+  constructor(app: Application, env: IEnv) {
     this.app = app;
     this.env = env;
   }

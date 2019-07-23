@@ -1,13 +1,13 @@
 import {IUserRecord} from "../interfaces/IUser";
 
-export class MailerService {
-  SendWelcomeEmail(user: Partial<IUserRecord>) {
+export class Mailer {
+  sendWelcomeEmail(user: Partial<IUserRecord>) {
     /**
      * @TODO Call Mailchimp/Sendgrid or whatever
      */
     return {delivered: 1, status: "ok"};
   }
-  StartEmailSequence(sequence: string, user: Partial<IUserRecord>) {
+  startEmailSequence(sequence: string, user: Partial<IUserRecord>) {
     if (!user.email) {
       throw new Error("No email provided");
     }

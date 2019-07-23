@@ -8,5 +8,5 @@ export const USERS_ME = "/users/me";
 
 export function usersRouter(parentRouter: Router) {
   const router = RestypedRouter<APIV1Doc>(parentRouter);
-  router.get(USERS_ME, async req => meCtr(req), isAuth);
+  router.get(USERS_ME, async req => meCtr(req.token), isAuth);
 }

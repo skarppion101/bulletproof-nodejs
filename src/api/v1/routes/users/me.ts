@@ -10,12 +10,8 @@
 //   });
 // };
 
-import {ICommonResponse} from "../../../../types/api-doc";
+import {IUserRecord} from "../../../../interfaces/IUser";
 
-export interface ISignInResponse extends ICommonResponse {
-  token?: string;
-}
-
-export function meCtr(req): ISignInResponse {
-  return {ok: true};
+export function meCtr(token: string): IUserRecord {
+  return {email: "", id: 0, password: "", username: ""};
 }

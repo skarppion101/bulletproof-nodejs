@@ -1,7 +1,7 @@
 import {loadEnvVariables} from "./env";
 import express from "express";
 import {createLogger} from "./utils/logger";
-import {initLoaders} from "./loaders/loaders";
+import {initLoaders} from "./loaders";
 import {initMiddlewares} from "./api/middlewares";
 import {initServices} from "./services";
 

@@ -10,7 +10,7 @@ export interface IEnv {
   JWT_SECRET: string;
 }
 
-export class Env implements IEnv {
+class Env implements IEnv {
   PORT: number;
   IS_PRODUCTION: boolean;
   JWT_SECRET: string;
