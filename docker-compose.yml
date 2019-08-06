@@ -1,0 +1,31 @@
+version: "2"
+
+services:
+  db:
+    container_name: db
+    hostname: db
+    image: nouchka/sqlite3
+    cap_drop:
+      - NET_ADMIN
+      - SYS_ADMIN
+    security_opt:
+      - no-new-privileges
+    volumes:
+      - ./tests/db.sqlite:/api/tests/db.sqlite
+  api:
+    container_name: api
+    build: ./
+    cap_drop:
+      - NET_ADMIN
+      - SYS_ADMIN
+    security_opt:
+      - no-new-privileges
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    command: node /api/dist/src/app.js
+    volumes:
+      - ./.env:/api/.env
+      - ./logs:/api/logs/
+    env_file: .env

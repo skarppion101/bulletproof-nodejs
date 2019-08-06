@@ -1,9 +1,11 @@
 import jwt from "jsonwebtoken";
 import argon2 from "argon2";
-import {IUserRecord} from "../interfaces/IUser";
-import {Application} from "express";
-import {IAuth} from "../interfaces/IAuth";
-import {IEnv} from "../env";
+import {randomBytes} from "crypto";
+import {ISignUpUserInput, IUserRecord} from "../../interfaces/IUser";
+import {IAuth} from "../../interfaces/IAuth";
+import {IBaseContext} from "../../interfaces/IContext";
+import {Sequelize} from "sequelize-typescript";
+import {UserModel} from "../../models/user.model";
 //
 // @Service()
 // export default class AuthService {
@@ -33,21 +35,21 @@ import {IEnv} from "../env";
 //        * watches every API call and if it spots a 'password' and 'email' property then
 //        * it decides to steal them!? Would you even notice that? I wouldn't :/
 //        */
-//       this.logger.silly("Hashing password");
+//       this.ctx.logger.silly("Hashing password");
 //       const hashedPassword = await argon2.hash(userInputDTO.password, {salt});
-//       this.logger.silly("Creating user db record");
+//       this.ctx.logger.silly("Creating user db record");
 //       const userRecord = await this.userModel.create({
 //         ...userInputDTO,
 //         salt: salt.toString("hex"),
 //         password: hashedPassword,
 //       });
-//       this.logger.silly("Generating JWT");
+//       this.ctx.logger.silly("Generating JWT");
 //       const token = this.generateToken(userRecord);
 //
 //       if (!userRecord) {
 //         throw new Error("User cannot be created");
 //       }
-//       this.logger.silly("Sending welcome email");
+//       this.ctx.logger.silly("Sending welcome email");
 //       await this.mailer.SendWelcomeEmail(userRecord);
 //
 //       /**
@@ -61,7 +63,7 @@ import {IEnv} from "../env";
 //       Reflect.deleteProperty(user, "salt");
 //       return {user, token};
 //     } catch (e) {
-//       this.logger.error(e);
+//       this.ctx.logger.error(e);
 //       throw e;
 //     }
 //   }
@@ -74,11 +76,11 @@ import {IEnv} from "../env";
 //     /**
 //      * We use verify from argon2 to prevent 'timing based' attacks
 //      */
-//     this.logger.silly("Checking password");
+//     this.ctx.logger.silly("Checking password");
 //     const validPassword = await argon2.verify(userRecord.password, password);
 //     if (validPassword) {
-//       this.logger.silly("Password is valid!");
-//       this.logger.silly("Generating JWT");
+//       this.ctx.logger.silly("Password is valid!");
+//       this.ctx.logger.silly("Generating JWT");
 //       const token = this.generateToken(userRecord);
 //
 //       const user = userRecord.toObject();
@@ -107,7 +109,7 @@ import {IEnv} from "../env";
 //      * because it doesn't have _the secret_ to sign it
 //      * more information here: https://softwareontheroad.com/you-dont-need-passport
 //      */
-//     this.logger.silly(`Sign JWT for userId: ${user._id}`);
+//     this.ctx.logger.silly(`Sign JWT for userId: ${user._id}`);
 //     return jwt.sign(
 //       {
 //         _id: user._id, // We are gonna use this in the middleware 'isAuth'
@@ -120,38 +122,62 @@ import {IEnv} from "../env";
 //   }
 // }
 
-export class Auth implements IAuth {
-  private app: Application;
-  private env: IEnv;
+export class LocalAuth implements IAuth {
+  private ctx: IBaseContext;
+  private db: Sequelize;
 
-  constructor(app: Application, env: IEnv) {
-    this.app = app;
-    this.env = env;
+  constructor(ctx: IBaseContext, db: Sequelize) {
+    this.ctx = ctx;
+    this.db = db;
   }
 
-  async signIn(email: string, password: string): Promise<{user: IUserRecord; token: string}> {
-    const userRecord = {id: 1, username: "username", email: "email", password: "password"};
-    if (!userRecord) {
-      throw new Error("User not registered");
-    }
-    /**
-     * We use verify from argon2 to prevent 'timing based' attacks
-     */
-    const isValidPassword = await argon2.verify(userRecord.password, password);
-    if (isValidPassword) {
-      const token = this.generateToken(userRecord);
-      return {user: userRecord, token};
-    } else {
-      throw new Error("Invalid Password");
-    }
+  signUp(user: ISignUpUserInput): Promise<{user: any; token: string}> {
+    const salt = randomBytes(32);
+    return argon2
+      .hash(user.password, {salt})
+      .then(hashedPassword => {
+        return UserModel.create({
+          ...user,
+          salt: salt.toString("hex"),
+          password: hashedPassword,
+        });
+      })
+      .then(userRec => {
+        const token = this.generateToken(userRec);
+        return {user, token};
+      })
+      .catch(err => {
+        this.ctx.logger.error(err);
+        throw new Error("Can't sign up user");
+      });
   }
 
-  private generateToken(user: IUserRecord) {
+  signIn(email: string, password: string): Promise<{user: IUserRecord; token: string}> {
+    return (
+      UserModel.findOne({where: {email}})
+        // @ts-ignore
+        .then((userRecord: UserModel) => {
+          if (!userRecord) {
+            throw new Error("User not registered");
+          }
+          return argon2.verify(userRecord.password, password).then(() => {
+            const token = this.generateToken(userRecord);
+            return {user: userRecord, token};
+          });
+        })
+        .catch((err: Error) => {
+          this.ctx.logger.error(err);
+          throw new Error("Invalid Password");
+        })
+    );
+  }
+
+  private generateToken(user: UserModel) {
     const today = new Date(); // TODO: Change to moment.js
     const exp = new Date(today);
     exp.setDate(today.getDate() + 60);
 
-    this.app.ctx.logger.silly(`Sign JWT for userId: ${user.id}`);
+    this.ctx.logger.silly(`Sign JWT for userId: ${user.id}`);
     return jwt.sign(
       {
         _id: user.id, // We are gonna use this in the middleware 'isAuth'
@@ -159,7 +185,7 @@ export class Auth implements IAuth {
         name: "Alex",
         exp: exp.getTime() / 1000,
       },
-      this.env.JWT_SECRET,
+      this.ctx.env.JWT_SECRET,
     );
   }
 }

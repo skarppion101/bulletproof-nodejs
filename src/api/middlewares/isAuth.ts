@@ -1,7 +1,7 @@
 import jwt from "express-jwt";
 import {NextFunction, Request, Response} from "express";
 import {ExpressError} from "../../types/express/error";
-import {IEnv} from "../../env";
+import {IAppContext} from "../../interfaces/IContext";
 
 export let isAuth = function(req: Request, res: Response, next: NextFunction) {
   next(
@@ -15,9 +15,9 @@ export let isAuth = function(req: Request, res: Response, next: NextFunction) {
 
 export const TOKEN_PROP = "token";
 
-export function initAuthMiddleware(env: IEnv) {
+export function initAuthMiddleware(ctx: IAppContext) {
   isAuth = jwt({
-    secret: env.JWT_SECRET, // The _secret_ to sign the JWTs
+    secret: ctx.env.JWT_SECRET, // The _secret_ to sign the JWTs
     userProperty: TOKEN_PROP, // Use req.token to store the JWT
     getToken: getTokenFromHeader, // How to extract the JWT from the request
   });

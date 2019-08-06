@@ -10,8 +10,8 @@ export const AUTH_SIGN_IN = "/auth/sign-in";
 export function authRouter(parentRouter: Router) {
   const router = RestypedRouter<APIV1Doc>(parentRouter);
 
-  router.post(AUTH_SIGN_UP, async req => signUpCtr(req.body));
-  router.post(AUTH_SIGN_IN, async req => signInCtr(req.body));
+  router.post(AUTH_SIGN_UP, async req => signUpCtr(req.app.ctx.services.auth, req.body));
+  router.post(AUTH_SIGN_IN, async req => signInCtr(req.app.ctx.services.auth, req.body));
 }
 
 // auth.post("/sign-in", signInValidator, signInCtr);

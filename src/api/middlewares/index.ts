@@ -1,6 +1,6 @@
-import {IEnv} from "../../env";
 import {initAuthMiddleware} from "./isAuth";
+import {Application} from "express";
 
-export function initMiddlewares(env: IEnv) {
-  initAuthMiddleware(env);
+export function initMiddlewares(app: Application) {
+  initAuthMiddleware(app.ctx);
 }

@@ -1,6 +1,3 @@
-import {Container} from "typedi";
-import {IUserRecord} from "../../interfaces/IUser";
-
 /**
  * Attach user to req.user
  * @param {*} req Express req Object

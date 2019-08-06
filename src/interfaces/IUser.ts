@@ -12,5 +12,5 @@ export interface IUserWithToken {
 }
 
 export interface IUserRecord extends ISignUpUserInput {
-  id: number;
+  id?: number;
 }

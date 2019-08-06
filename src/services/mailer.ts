@@ -1,15 +1,12 @@
 import {IUserRecord} from "../interfaces/IUser";
 import {IMailer} from "../interfaces/IMailer";
-import {Application} from "express";
-import {IEnv} from "../env";
+import {IBaseContext} from "../interfaces/IContext";
 
 export class Mailer implements IMailer {
-  private app: Application;
-  private env: IEnv;
+  private ctx: IBaseContext;
 
-  constructor(app: Application, env: IEnv) {
-    this.app = app;
-    this.env = env;
+  constructor(ctx: IBaseContext) {
+    this.ctx = ctx;
   }
 
   sendWelcomeEmail(user: Partial<IUserRecord>) {
@@ -18,6 +15,7 @@ export class Mailer implements IMailer {
      */
     return {delivered: 1, status: "ok"};
   }
+
   startEmailSequence(sequence: string, user: Partial<IUserRecord>) {
     if (!user.email) {
       throw new Error("No email provided");

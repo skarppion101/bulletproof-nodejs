@@ -1,9 +1,12 @@
-import {IUserRecord} from "./IUser";
+import {ISignUpUserInput, IUserRecord} from "./IUser";
 
-export interface IAuth {
-  signIn(email: string, password: string): Promise<{user: IUserRecord; token: string}>;
+interface IAuthResponse {
+  user?: IUserRecord;
+  token?: string;
 }
 
-// export abstract class IAuth {
-//   abstract signIn(email: string, password: string): Promise<{user: IUserRecord; token: string}>;
-// }
+export interface IAuth {
+  signIn(email: string, password: string): Promise<IAuthResponse>;
+
+  signUp(user: ISignUpUserInput): Promise<IAuthResponse>;
+}

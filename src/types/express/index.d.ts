@@ -1,18 +1,11 @@
-import {IEnv} from "../../env";
-import {Logger} from "winston";
-import {IServices} from "../../services";
-
-interface Context {
-  env: IEnv;
-  logger: Logger;
-  services: IServices;
-}
+import {IAppContext} from "../../interfaces/IContext";
 
 declare global {
   namespace Express {
     export interface Application {
-      ctx: Context;
+      ctx: IAppContext;
     }
+
     export interface Request {
       token: string;
     }

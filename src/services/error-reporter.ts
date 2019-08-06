@@ -1,15 +1,12 @@
-import {Application} from "express";
-import {IEnv} from "../env";
 import {IErrorReporter, ISystemError} from "../interfaces/IErrorReporter";
 import {ICommonResponse} from "../types/api-doc";
+import {IBaseContext} from "../interfaces/IContext";
 
 export class ErrorReporter implements IErrorReporter {
-  private app: Application;
-  private env: IEnv;
+  private ctx: IBaseContext;
 
-  constructor(app: Application, env: IEnv) {
-    this.app = app;
-    this.env = env;
+  constructor(ctx: IBaseContext) {
+    this.ctx = ctx;
   }
 
   async report(err: ISystemError): Promise<ICommonResponse> {
